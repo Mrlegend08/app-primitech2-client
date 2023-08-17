@@ -391,8 +391,8 @@ const Main = () => {
         <section className="hero-section">
           <div className="container">
             <div className="hero-section__wrapper">
-              <h1 className='hero-section__title'>Raqamli muammolarga zamonaviy yechimlar</h1>
-              <p className='hero-section__desc'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever </p>
+              <h1 className='hero-section__title'>{about?.title}</h1>
+              <p className='hero-section__desc'>{about?.description} </p>
               <div className="hero-section__button-flex">
                 <a className='hero-section__connection-btn' href='tel:9989381111881'>
                   Bog’lanish

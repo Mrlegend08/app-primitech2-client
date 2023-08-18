@@ -210,6 +210,17 @@ const Main = () => {
     click.classList.toggle("display-flex")
   }
 
+  const modalOpen = () => {
+    const modal = document.querySelector(".site-header__modal")
+    modal.classList.remove("display-none")
+  }
+
+  const modalNone = () => {
+    const modal = document.querySelector(".site-header__modal")
+    modal.classList.add("display-none")
+    document.querySelector("body").style.overflow = "auto"
+  }
+
   React.useEffect(() => {
     if (window.innerWidth <= 980 && window.innerWidth >= 890) {
       setCarucelGap(40)
@@ -270,12 +281,12 @@ const Main = () => {
       <header className="site-header">
         <div className="container">
           <div className="site-header__wrapper">
-            <button className='site-header__burger-btn' data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"><img src={burger} alt="" /></button>
+            <button className='site-header__burger-btn' data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" onClick={() => modalOpen()}><img src={burger} alt="" /></button>
             <div className="site-header__start">
               <Link to="/" className="site-header__logo-link">
                 <img
                   className="site-header__logo"
-                  src={siteLogo}
+                  src={about.length > 0 ? about[0].icon : siteLogo}
                   alt="Primitech site logo"
                   width="57"
                   height="57" />
@@ -294,7 +305,7 @@ const Main = () => {
                     alt="Arrow down" />
                   <ul className='site-header__nav-dropdown'>
                     <li className='site-header__nav-dropdown-item'>
-                      <a href='#clients' className='site-header__nav-dropdown-link'>{staticApi[`${String(languages[langIndex].toLowerCase())}`].navbarDrop[0]}</a>
+                      <a href='#client' className='site-header__nav-dropdown-link'>{staticApi[`${String(languages[langIndex].toLowerCase())}`].navbarDrop[0]}</a>
                     </li>
                     <li className='site-header__nav-dropdown-item'>
                       <a href='#ourteam' className='site-header__nav-dropdown-link'>{staticApi[`${String(languages[langIndex].toLowerCase())}`].navbarDrop[1]}</a>
@@ -303,7 +314,6 @@ const Main = () => {
                       <a href='#test' className='site-header__nav-dropdown-link'>{staticApi[`${String(languages[langIndex].toLowerCase())}`].navbarDrop[2]}</a>
                     </li>
                   </ul>
-
                 </li>
                 <li className="site-header__nav-item">
                   <a className="site-header__nav-link" href='#services'>{staticApi[`${String(languages[langIndex].toLowerCase())}`].navbar[2]}</a>
@@ -353,66 +363,70 @@ const Main = () => {
           </div>
         </div>
 
-        <div style={{ background: "black" }} className="offcanvas offcanvas-start" tabIndex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-          
-          <div className="site-header__burger">
-            <Link to="/" className="site-header__burger-logo-link">
-              <img
-                className="site-header__logo"
-                src={siteLogo}
-                alt="Primitech site logo"
-                width="57"
-                height="57" />
-            </Link>
-            <ul className="site-header__burger-list">
-              <li className="site-header__burger-item">
-                <Link className="site-header__burger-link" to="/">{staticApi[`${String(languages[langIndex].toLowerCase())}`].navbar[0]}</Link>
-              </li>
-              <li className='site-header__burger-item' onClick={() => handleDropdown()}>
-                <a className="site-header__burger-link" href="#about">{staticApi[`${String(languages[langIndex].toLowerCase())}`].navbar[1]}</a>
-              </li>
-              <li className="site-header__burger-item">
-                <a className="site-header__burger-link" href='#services'>{staticApi[`${String(languages[langIndex].toLowerCase())}`].navbar[2]}</a>
-              </li>
-              <li className='site-header__burger-item'>
-                <a href='#portfolio' className='site-header__burger-link'>{staticApi[`${String(languages[langIndex].toLowerCase())}`].navbar[3]}</a>
-              </li>
-              <li className='site-header__burger-item'>
-                <a className='site-header__burger-link' href="#achi">{staticApi[`${String(languages[langIndex].toLowerCase())}`].navbar[4
-                ]}</a>
-              </li>
-            </ul>
-            <a className='site-header__burger-tel' href="tel:000000000">
-              <img src={phoneBottom} alt="Phonen bottom" width={24} height={24} />
-              +(000) 000 00 00
-            </a>
-            <div style={{marginTop: "25px"}} className="site-header__end-lang" onClick={() => handleClick()}>
-              <ul className='site-header__end-list'>
-                <li className='site-header__end-item'>
-                  {languages[langIndex]}
+        <div className="site-header__modal">
+          <div style={{ background: "black", height: "100%" }} className="offcanvas offcanvas-start" tabIndex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div className="site-header__burger">
+              <Link to="/" className="site-header__burger-logo-link">
+                <img
+                  className="site-header__logo"
+                  src={about.length > 0 ? about[0].icon : siteLogo}
+                  alt="Primitech site logo"
+                  width="57"
+                  height="57" />
+              </Link>
+              <ul className="site-header__burger-list">
+                <li className="site-header__burger-item">
+                  <Link className="site-header__burger-link" to="/" data-bs-dismiss="offcanvas">{staticApi[`${String(languages[langIndex].toLowerCase())}`].navbar[0]}</Link>
+                </li>
+                <li className='site-header__burger-item'>
+                  <a className="site-header__burger-link" href="#about" onClick={() => modalNone()}>{staticApi[`${String(languages[langIndex].toLowerCase())}`].navbar[1]}</a>
+                </li>
+                <li className="site-header__burger-item">
+                  <a className="site-header__burger-link" href='#services' onClick={() => modalNone()}>{staticApi[`${String(languages[langIndex].toLowerCase())}`].navbar[2]}</a>
+                </li>
+                <li className='site-header__burger-item'>
+                  <a className='site-header__burger-link' href='#portfolio' onClick={() => modalNone()}>{staticApi[`${String(languages[langIndex].toLowerCase())}`].navbar[3]}</a>
+                </li>
+                <li className='site-header__burger-item'>
+                  <a className='site-header__burger-link' href="#achi" onClick={() => modalNone()}>{staticApi[`${String(languages[langIndex].toLowerCase())}`].navbar[4
+                  ]}</a>
                 </li>
               </ul>
-              <ul className='site-header__end-lang-dropdown'>
-                {
-                  languages.map((lang, index) => (
-                    <li
-                      key={index}
-                      className='site-header__end-lang-item'
-                      onClick={() => setLangIndex(index)}>
-                      {lang}
-                    </li>
-                  ))
-                }
-              </ul>
-              <img
-                className='site-header__end-lang-img'
-                src={arrowDownLang}
-                alt="Arrow down"
-                width={12}
-                height={6} />
+              <a className='site-header__burger-tel' href="tel:000000000">
+                <img src={phoneBottom} alt="Phonen bottom" width={24} height={24} />
+                +(000) 000 00 00
+              </a>
+              <div style={{ marginTop: "25px" }} className="site-header__end-lang" onClick={() => handleClick()}>
+                <ul className='site-header__end-list'>
+                  <li className='site-header__end-item'>
+                    {languages[langIndex]}
+                  </li>
+                </ul>
+                <ul className='site-header__end-lang-dropdown'>
+                  {
+                    languages.map((lang, index) => (
+                      <li
+                        key={index}
+                        className='site-header__end-lang-item'
+                        onClick={() => setLangIndex(index)}>
+                        {lang}
+                      </li>
+                    ))
+                  }
+                </ul>
+                <img
+                  className='site-header__end-lang-img'
+                  src={arrowDownLang}
+                  alt="Arrow down"
+                  width={12}
+                  height={6} />
+              </div>
             </div>
+            <span className='site-header__btn-close' data-bs-dismiss="offcanvas" aria-label="Close"><svg width="25" height="24" viewBox="0 0 25 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M9.7861 12.1842L0.868012 20.9175L4.01564 23.9999L12.9337 15.2666L21.8519 23.9999L24.9995 20.9175L16.0814 12.1842L24.9998 3.45056L21.8522 0.368164L12.9337 9.10182L4.01531 0.36823L0.867676 3.45063L9.7861 12.1842Z" fill="currentColor" />
+            </svg>
+            </span>
           </div>
-          <span className='site-header__btn-close' data-bs-dismiss="offcanvas" aria-label="Close">Orqaga qaytish</span>
         </div>
       </header>
 
@@ -615,7 +629,7 @@ const Main = () => {
               <Link className='site-footer__top-logo-link' to="/">
                 <img
                   className='site-footer__top-logo-img'
-                  src={siteLogo}
+                  src={about.length > 0 ? about[0].icon : siteLogo}
                   alt="Logo"
                   width={69}
                   height={69}

@@ -1,1 +1,1 @@
-export const API_PATH = "http://backend.primetechgroup.uz"
+export const API_PATH = "https://backend.primetechgroup.uz"

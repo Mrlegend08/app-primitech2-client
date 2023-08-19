@@ -240,7 +240,7 @@ const Main = () => {
     }
 
     try {
-      const res = await fetch("http://backend.primetechgroup.uz/uz/common/appeals-create", {
+      const res = await fetch(`http://backend.primetechgroup.uz/${languages[langIndex]}/common/appeals-create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

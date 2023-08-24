@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 // Import Swiper React components
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
@@ -29,7 +31,7 @@ import './index.scss'
 const Main = () => {
 
   const languages = ["EN", "RU", "UZ"]
-  const [langIndex, setLangIndex] = React.useState(0)
+  const [langIndex, setLangIndex] = React.useState(2)
   const [service, setService] = React.useState([])
   const [about, setAbout] = React.useState([])
   const [achi, setAchi] = React.useState([])
@@ -211,7 +213,8 @@ const Main = () => {
   }
 
   const modalOpen = () => {
-    const modal = document.querySelector(".site-header__modal")
+    const modal = document.que
+    rySelector(".site-header__modal")
     modal.classList.remove("display-none")
   }
 
@@ -219,6 +222,13 @@ const Main = () => {
     const modal = document.querySelector(".site-header__modal")
     modal.classList.add("display-none")
     document.querySelector("body").style.overflow = "auto"
+  }
+
+  const handleChange = (evt) => {
+    const value = evt.target.value
+    if (!isNaN(value[value.length - 1])) {
+      evt.target.value = String(value).slice(0, value.length - 1)
+    }
   }
 
   React.useEffect(() => {
@@ -240,7 +250,7 @@ const Main = () => {
     }
 
     try {
-      const res = await fetch(`http://backend.primetechgroup.uz/${languages[langIndex]}/common/appeals-create`, {
+      const res = await fetch(`https://backend.primetechgroup.uz/${String(languages[langIndex]).toLowerCase()}/common/appeals-create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -250,9 +260,11 @@ const Main = () => {
       });
 
       const data = await res.json()
-      console.log(data)
+      const notify = () => toast("Yuborildi");
+      res.status === 429 ? toast.error("Limit kopayib ketdi keyinroq qayta urinib koring") : notify()
     } catch (error) {
       console.log(error.message)
+
     }
 
     evt.target.reset();
@@ -273,8 +285,6 @@ const Main = () => {
       </SwiperSlide>
     )
   })
-
-  console.log(contact)
 
   return (
     <>
@@ -328,7 +338,7 @@ const Main = () => {
               </ul>
             </nav>
 
-            <div style={{ marginTop: "20px" }} className="site-header__end">
+            <div className="site-header__end">
               <div className="site-header__end-lang" onClick={() => handleClick()}>
                 <ul className='site-header__end-list'>
                   <li className='site-header__end-item'>
@@ -354,10 +364,10 @@ const Main = () => {
                   width={12}
                   height={6} />
               </div>
-              <a className='site-header__end-num' href="tel: 0000000000">+(000) 000 00 00</a>
+              <a className='site-header__end-num' href={`tel:${contact.length > 0 ? contact[0].phone : "null"}`}>{contact.length > 0 ? contact[0].phone : "null"}</a>
             </div>
 
-            <a className='site-header__burger-tel' href="tel:000000000000">
+            <a className='site-header__burger-tel' href={`tel:${contact.length > 0 ? contact[0].phone : "null"}`}>
               <img className='site-header__burger-tel-img' src={burgerPhone} alt="Burger tel img" width={35} height={35} />
             </a>
           </div>
@@ -394,7 +404,7 @@ const Main = () => {
               </ul>
               <a className='site-header__burger-tel' href="tel:000000000">
                 <img src={phoneBottom} alt="Phonen bottom" width={24} height={24} />
-                +(000) 000 00 00
+                {contact.length > 0 ? contact[0].phone : "null"}
               </a>
               <div style={{ marginTop: "25px" }} className="site-header__end-lang" onClick={() => handleClick()}>
                 <ul className='site-header__end-list'>
@@ -422,7 +432,7 @@ const Main = () => {
                   height={6} />
               </div>
             </div>
-            <span className='site-header__btn-close' data-bs-dismiss="offcanvas" aria-label="Close"><svg width="25" height="24" viewBox="0 0 25 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <span className='site-header__btn-close' data-bs-dismiss="offcanvas" aria-label="Close"><svg width="20" height="20" viewBox="0 0 25 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" clip-rule="evenodd" d="M9.7861 12.1842L0.868012 20.9175L4.01564 23.9999L12.9337 15.2666L21.8519 23.9999L24.9995 20.9175L16.0814 12.1842L24.9998 3.45056L21.8522 0.368164L12.9337 9.10182L4.01531 0.36823L0.867676 3.45063L9.7861 12.1842Z" fill="currentColor" />
             </svg>
             </span>
@@ -440,9 +450,9 @@ const Main = () => {
                 <a className='hero-section__connection-btn' href='tel:9989381111881'>
                   {staticApi[`${String(languages[langIndex].toLowerCase())}`].heroBtns[0]}
                 </a>
-                <Link className='hero-section__more-btn' to="/more">
+                <a className='hero-section__more-btn' href='#buyurtma'>
                   {staticApi[`${String(languages[langIndex].toLowerCase())}`].heroBtns[1]}
-                </Link>
+                </a>
               </div>
             </div>
           </div>
@@ -559,7 +569,7 @@ const Main = () => {
         <section className='ourTeam-section'>
           <div className="container">
             <div className="ourTeam-section__wrapper">
-              <h2 className='ourTeam-section__title'>{staticApi[`${String(languages[langIndex].toLowerCase())}`].titleJamoa}</h2>
+              <h2 id='ourteam' className='ourTeam-section__title'>{staticApi[`${String(languages[langIndex].toLowerCase())}`].titleJamoa}</h2>
               <ul className='ourTeam-section__list'>
                 {team?.map((item, index) => {
                   return (
@@ -588,7 +598,6 @@ const Main = () => {
             slidesPerView={carucelSlidePerview}
             onSlideChange={() => console.log('slide change')}
             onSwiper={(swiper) => console.log(swiper)}
-
           >
             {tests}
           </Swiper>
@@ -601,16 +610,34 @@ const Main = () => {
                 <img className='call-section__start-img' src={callImg} width={474} height={437} />
               </div>
               <div className="call-section__end">
-                <h2 className='call-section__title'>{staticApi[`${String(languages[langIndex].toLowerCase())}`].solveProblem}</h2>
+                <h2 className='call-section__title' id='buyurtma'>{staticApi[`${String(languages[langIndex].toLowerCase())}`].solveProblem}</h2>
                 <form onSubmit={(evt) => handleSubmit(evt)} className='call-section__form'>
                   <div className="call-section__form-group">
                     <label className='call-section__form-label' htmlFor="number">{staticApi[`${String(languages[langIndex].toLowerCase())}`].formNumberLabel}</label>
-                    <input className='call-section__form-input' type="text" id='number' name='phone' placeholder={staticApi[`${String(languages[langIndex].toLowerCase())}`].formNumberInput} required />
-                    <img className='call-section__form-img' src={mobile} alt="User icon" />
+                    <input
+                      className='call-section__form-input'
+                      type="number"
+                      id='number'
+                      name='phone'
+                      defaultValue="998"
+                      placeholder={staticApi[`${String(languages[langIndex].toLowerCase())}`].formNumberInput}
+                      maxLength={12}
+                      minLength={12}
+                      required
+                    />
+                    <img className='call-section__form-img' src={mobile} alt="Phone icon" />
                   </div>
                   <div className="call-section__form-group">
                     <label className='call-section__form-label' htmlFor="name">{staticApi[`${String(languages[langIndex].toLowerCase())}`].formNameLabel}</label>
-                    <input className='call-section__form-input' type="text" id='name' name='name' placeholder='Nafisa' required />
+                    <input
+                      className='call-section__form-input'
+                      type="text"
+                      id='name'
+                      name='name'
+                      onChange={(evt) => handleChange(evt)}
+                      placeholder={staticApi[`${String(languages[langIndex].toLowerCase())}`].formNameInput}
+                      required />
+
                     <img className='call-section__form-img' src={user} alt="User icon" />
                   </div>
 
@@ -621,6 +648,7 @@ const Main = () => {
           </div>
         </section>
       </main>
+
 
       <footer className='site-footer'>
         <div className="container">
@@ -647,12 +675,12 @@ const Main = () => {
                   </a>
                   <ul className='site-footer__top-drop-list'>
                     <li className='site-footer__top-drop-item'>
-                      <a className='site-footer__top-drop-link' href="#clients">
+                      <a className='site-footer__top-drop-link' href="#services567 n">
                         {staticApi[`${String(languages[langIndex].toLowerCase())}`].navbarDrop[0]}
                       </a>
                     </li>
                     <li className='site-footer__top-drop-item'>
-                      <a className='site-footer__top-drop-link' href="#ourteam">
+                      <a className='site-footer__top-drop-link' href="#our                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         team">
                         {staticApi[`${String(languages[langIndex].toLowerCase())}`].navbarDrop[1]}
                       </a>
                     </li>
@@ -751,13 +779,14 @@ const Main = () => {
                     width={22}
                     height={22}
                   />
-                  <address className='site-footer__bottom-item-address'>Location: {contact.length > 0 ? contact[0].location : "null"}</address>
+                  <a href={`https://www.google.com/maps/${contact.length > 0 ? contact[0].location : "null"}`} className='site-footer__bottom-item-address'>Location</a>
                 </li>
               </ul>
             </div>
           </div>
         </div>
       </footer >
+      <ToastContainer />
     </>
   )
 }

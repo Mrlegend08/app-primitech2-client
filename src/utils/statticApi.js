@@ -1,7 +1,7 @@
 export const staticApi = {
     uz: {
         navbar: ["Asosiy", "Haqida", "Xizmatlar", "Portfolio", "Yutuqlar"],
-        navbarDrop: ["Mijozlar", "Bizning jamoamiz", "Guvohlar"],
+        navbarDrop: ["Mijozlar", "Bizning jamoamiz", "Izohlar"],
         heroBtns: ["Bog'lanish", "Buyurtma berish"],
         titleXizmatlar: "Xizmatlar",
         titleAbout: "Biz haqimizda",
@@ -9,11 +9,12 @@ export const staticApi = {
         titlePortfolio: "Portfolio",
         titleClient: "Mijozlar",
         titleJamoa: "Bizning jamoamiz",
-        titleGuvoh: "Guvohlar",
+        titleGuvoh: "Izohlar",
         solveProblem: "Muammoingizni hal qilish uchun bizga qo'ng'iroq qiling",
         formNumberLabel: "Telefon raqam",
         formNumberInput: "Telefon raqamingizni kiriting",
-        formNameLabel: "Ismingizni kiriting",
+        formNameLabel: "Ism",
+        formNameInput: "Ismingizni kiriting",
         formBtnSubmit: "Tasdiqlash",
     },
     ru: {
@@ -30,7 +31,8 @@ export const staticApi = {
         solveProblem: "Позвоните нам, чтобы решить вашу проблему",
         formNumberLabel: "Номер телефона",
         formNumberInput: "Введите свой номер телефона",
-        formNameLabel: "Введите ваше имя",
+        formNameLabel: "Имя",
+        formNameInput: "Введите ваше имя",
         formBtnSubmit: "Подтверждение",
     },
     en: {
@@ -47,7 +49,8 @@ export const staticApi = {
         solveProblem: "Call us to solve your problem",
         formNumberLabel: "Phone number",
         formNumberInput: "Enter your phone number",
-        formNameLabel: "Enter your name",
+        formNameLabel: "Name",
+        formNameInput: "Enter your name",
         formBtnSubmit: "Confirm",
     },
 };

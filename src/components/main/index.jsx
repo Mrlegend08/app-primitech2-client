@@ -622,7 +622,6 @@ const Main = () => {
                       defaultValue="998"
                       placeholder={staticApi[`${String(languages[langIndex].toLowerCase())}`].formNumberInput}
                       maxLength={12}
-                      minLength={12}
                       required
                     />
                     <img className='call-section__form-img' src={mobile} alt="Phone icon" />
